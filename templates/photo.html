@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block title %}Photo{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="small-12 large-10 columns photo">
+      <img src="{{ url_for('crop_view', filename=photo.crops["display1280"]) }}">
+    </div>
+    <div class="small-12 large-2 columns photo-sidebar">
+      {% if photo.exif["ImageDescription"] %}
+      <div class="row">
+        <div class="small-12 columns photo-description">
+          <p>{{ photo.exif["ImageDescription"] }}</p>
+        </div>
+      </div>
+      {% endif %}
+      <div class="row">
+        <div class="small-12 columns photo-info">
+          <p>{{ photo.exif["Model"] }}</p>
+          <p>{{ photo.exif["LensModel"] }}</p>
+          <p>{{ photo.exif["FNumber"] }}</p>
+          <p>{{ photo.exif["ApertureValue"] }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

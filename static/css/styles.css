@@ -1,0 +1,84 @@
+/* Foundation Overides */
+body {
+    font-family: "soleil",'helvetica neue', 'helvetica', sans-serif;
+    margin: 0 auto;
+}
+
+p {
+    font-size: 1.1em;
+    line-height: 1.3em;
+}
+
+img {
+    vertical-align: bottom;
+}
+
+.row {
+    max-width: 100%;
+}
+
+h1 {
+    font-family: "rooney-web",sans-serif;
+    -moz-font-feature-settings:"liga=1, dlig=1";
+    -ms-font-feature-settings:"liga", "dlig";
+    -o-font-feature-settings:"liga", "dlig";
+    -webkit-font-feature-settings:"liga", "dlig";
+    font-feature-settings:"liga", "dlig";
+}
+
+h2 {
+    font-family: "rooney-web",sans-serif;
+    -moz-font-feature-settings:"liga=1, dlig=1";
+    -ms-font-feature-settings:"liga", "dlig";
+    -o-font-feature-settings:"liga", "dlig";
+    -webkit-font-feature-settings:"liga", "dlig";
+    font-feature-settings:"liga", "dlig";
+}
+
+h3 {
+    font-family: "soleil",'helvetica neue', 'helvetica', sans-serif;
+    -moz-font-feature-settings:"liga=1, dlig=1";
+    -ms-font-feature-settings:"liga", "dlig";
+    -o-font-feature-settings:"liga", "dlig";
+    -webkit-font-feature-settings:"liga", "dlig";
+    font-feature-settings:"liga", "dlig";
+    font-weight: 100;
+}
+
+
+h4 {
+    font-family: "soleil",'helvetica neue', 'helvetica', sans-serif;
+    -moz-font-feature-settings:"liga=1, dlig=1";
+    -ms-font-feature-settings:"liga", "dlig";
+    -o-font-feature-settings:"liga", "dlig";
+    -webkit-font-feature-settings:"liga", "dlig";
+    font-feature-settings:"liga", "dlig";
+    font-weight: 100;
+}
+
+.right-align {
+    text-align: right;
+}
+/* Typkit CSS */
+.wf-loading h1, .wf-loading h2, .wf-loading h3, .wf-loading p {
+    visibility: hidden;
+  }
+
+.wf-active h1, h2, h3, h4, p {
+    visibility: visible;
+}
+
+/* Photo Page */
+.photo {
+    background: #000;
+    text-align: center;
+}
+
+.photo-info {
+    font-size: .9em;
+    color: #808080;
+}
+
+.photo-info p {
+    margin: 0;
+}

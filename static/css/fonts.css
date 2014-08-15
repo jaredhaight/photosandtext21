@@ -1,0 +1,49 @@
+@font-face {
+	font-family: 'pat_icons';
+	src:url('/static/fonts/pat_icons.eot?-77l7tu');
+	src:url('/static/fonts/pat_icons.eot?#iefix-77l7tu') format('embedded-opentype'),
+		url('/static/fonts/pat_icons.woff?-77l7tu') format('woff'),
+		url('/static/fonts/pat_icons.ttf?-77l7tu') format('truetype'),
+		url('/static/fonts/pat_icons.svg?-77l7tu#pat_icons') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'pat_icons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-home:before {
+	content: "\e605";
+}
+.icon-location:before {
+	content: "\e604";
+}
+.icon-calendar:before {
+	content: "\e601";
+}
+.icon-user:before {
+	content: "\e607";
+}
+.icon-cloud-download:before {
+	content: "\e600";
+}
+.icon-info:before {
+	content: "\e606";
+}
+.icon-arrow-left:before {
+	content: "\e602";
+}
+.icon-arrow-right:before {
+	content: "\e603";
+}

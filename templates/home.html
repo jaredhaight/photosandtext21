@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block title %}Home{% endblock %}
+
+{% block header %}
+<div class="row">
+  <div class="small-12 text-center">
+    <h2>Photos and Text 2.1</h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    {% for gallery in galleries %}
+    <div class="small-12 medium-6 large-4 columns text-center">
+      <a href="{{ url_for('gallery_view', gallery_id=gallery.id) }}"><img src="{{ url_for('crop_view', filename=gallery.photos[0].crops["home600"] ) }}"></a>
+      <p>{{ gallery.name }}</p>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}

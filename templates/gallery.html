@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/justifiedGallery-31.min.css') }}">
+{% endblock %}
+
+{% block title %}{{ gallery.name }}{% endblock %}
+
+{% block header %}
+  <div class="row">
+    <div class="small-12 columns text-center">
+      <h2>{{ gallery.name }}</h2>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div id="gallery">
+      {% for photo in gallery.photos %}
+        <a id="{{ photo.id }}"href="{{ url_for('photo_page_view', photo_id=photo.id) }}">
+           <img src="{{ url_for('crop_view', filename=photo.crops["display"]) }}">
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ url_for('static', filename="js/jquery.justifiedGallery-31.min.js") }}"></script>
+<script>
+$(window).load(function () {
+  $(document ).ready(function() {
+   $("#gallery").justifiedGallery({
+      rowHeight: 300,
+      spinner: true,
+      justifyLastRow: false,
+      captions: false
+    });
+  });
+});
+</script>
+{% endblock %}

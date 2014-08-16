@@ -12,6 +12,7 @@ class Photo(db.Document):
     filename = StringField()
     exif = DictField()
     crops = DictField()
+    orientation = StringField()
 
 
 class Gallery(db.Document):

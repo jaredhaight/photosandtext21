@@ -68,17 +68,159 @@ h4 {
     visibility: visible;
 }
 
+/* Base CSS */
+.abs-right {
+    position: absolute;
+    right: 0;
+}
+
+.abs-left {
+    position: absolute;
+    left: 0;
+}
+
 /* Photo Page */
 .photo {
     background: #000;
     text-align: center;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 .photo-info {
     font-size: .9em;
     color: #808080;
+    overflow-x: hidden;
+    margin-bottom: 25px;
 }
 
 .photo-info p {
     margin: 0;
+}
+
+.landscape {
+    max-width: 160%;
+    margin-left: -30%;
+}
+
+.photo-nav {
+    height: 195px;
+    background: #252525;
+    padding: 10px 0 10px 0;
+}
+
+.photo-nav img {
+    width: 140px;
+}
+
+.photo-nav-cover {
+    height: 140px;
+    width: 140px;
+    background: #000;
+    opacity: .4;
+}
+
+.photo-nav-text {
+    position: absolute;
+    top: 40px;
+    color: #fff;
+    z-index: 100;
+    text-align: center;
+    width: 100%;
+}
+
+.photo-prev-nav-link {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.photo-next-nav-link {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+/* Medium Only Screens */
+@media only screen and (min-width: 40.063em) and (max-width: 64em) {
+
+}
+
+/* Medium and larger */
+@media only screen and (min-width: 40.063em) {
+    .landscape {
+        max-width: 100%;
+        margin-left: 0;
+    }
+
+    .photo-nav {
+        height: 240px;
+    }
+
+    .photo-nav-text {
+        top: 80px;
+    }
+
+    .photo-nav img {
+        width: 200px;
+    }
+
+    .photo-nav-cover {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* Large Screens */
+@media only screen and (min-width: 64.063em) {
+    .photo {
+        position: absolute;
+        left: 0;
+        width: 80%;
+        padding: 0;
+    }
+
+    .photo-info {
+        margin-bottom: 55px;
+    }
+
+    .photo-sidebar {
+        width: 20%;
+    }
+
+    .photo-nav {
+        height: 100%;
+        text-align: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .photo-nav-cover {
+        width: 100%;
+    }
+
+    .photo-next-nav-link {
+        position: fixed;
+        top: auto;
+        right: auto;
+        bottom: 0;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .photo-prev-nav-link {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        width: 100%;
+    }
+
+    .photo-next-nav-link {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+    }
 }

@@ -5,7 +5,7 @@ from shutil import copy
 from run_server import app
 from models.photos import Gallery, Photo, CropSettings
 from models.deploy import DeployedFiles
-from utils import make_crop, get_image_info
+from utils import make_crop, get_image_info, get_orientation
 from flask_frozen import Freezer
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
@@ -21,8 +21,9 @@ def home_view():
 
 @freezer.register_generator
 def photo_page_view():
-    for photo in Photo.objects:
-        yield {'photo_id': photo.id}
+    for gallery in Gallery.objects:
+        for photo in gallery.photos:
+            yield {'gallery_id':gallery.id, 'photo_id': photo.id}
 
 
 def create_deploy_list():
@@ -60,8 +61,10 @@ def update_deployed_files(filename):
     file_doc.save()
     return "File added to DeployedFiles table: %s" % filename
 
+
 def build_site():
     freezer.freeze()
+
 
 def deploy_site():
     file_i = 1
@@ -76,32 +79,52 @@ def deploy_site():
         file_i += 1
         update_deployed_files(deploy_file)
 
+
 def import_files():
     for directory in os.listdir(app.config["UPLOAD_DIR"]):
-        gallery = Gallery(name=directory)
-        gallery_dir = os.path.join(app.config["UPLOAD_DIR"],directory)
-        photos = glob.glob(str(gallery_dir+"/*.jpg"))
-        photo_i = 1
-        for photo in photos:
-            copy(photo, app.config["PHOTO_STORE"])
-            slash = photo.rfind('/')+1
-            filename = photo[slash:]
-            photo_doc = Photo(filename=filename)
-            photo_exif = get_image_info(photo)
-            if photo_exif is not None:
-                photo_doc.exif = photo_exif
-            crop_i = 1
-            for cropsetting in CropSettings.objects:
-                cropfile = make_crop(filename, cropsetting.name, cropsetting.height, cropsetting.width)
-                print "Making crops - Crop[%s/%s] for Photo[%s/%s] Crop file: %s" % (crop_i, len(CropSettings.objects), photo_i, len(photos), cropfile)
-                photo_doc.crops[cropsetting.name] = cropfile
+        if directory != '.DS_Store':
+            gallery = Gallery(name=directory)
+            gallery_dir = os.path.join(app.config["UPLOAD_DIR"], directory)
+            photos = glob.glob(str(gallery_dir+"/*.jpg"))
+            photo_i = 1
+            for photo in photos:
+                copy(photo, app.config["PHOTO_STORE"])
+                slash = photo.rfind('/')+1
+                filename = photo[slash:]
+                photo_doc = Photo(filename=filename)
+                photo_exif = get_image_info(photo)
+                if photo_exif is not None:
+                    photo_doc.exif = photo_exif
+                crop_i = 1
+                for cropsetting in CropSettings.objects:
+                    cropfile = make_crop(filename, cropsetting.name, cropsetting.height, cropsetting.width)
+                    print "Making crops - Crop[%s/%s] for Photo[%s/%s] Crop file: %s" \
+                          % (crop_i, len(CropSettings.objects), photo_i, len(photos), cropfile)
+                    photo_doc.crops[cropsetting.name] = cropfile
+                    photo_doc.save()
+                    crop_i += 1
+                photo_doc.orientation = get_orientation(os.path.join(app.config["PHOTO_STORE"], filename))
                 photo_doc.save()
-                crop_i += 1
-            photo_doc.save()
-            gallery.photos.append(photo_doc)
-            photo_i += 1
-        if os.path.isfile(os.path.join(gallery_dir,"desc.txt")):
-            with open(os.path.join(gallery_dir,"desc.txt"), "r") as desc_file:
-                data = desc_file.read().replace('\n', '')
-                gallery.description = data
-        gallery.save()
+                gallery.photos.append(photo_doc)
+                photo_i += 1
+            if os.path.isfile(os.path.join(gallery_dir, "desc.txt")):
+                print "Desc.txt exists. Importing."
+                with open(os.path.join(gallery_dir, "desc.txt"), "r") as desc_file:
+                    data = desc_file.read().replace('\n', '')
+                    print "Desc.txt content: %s" % data
+                    gallery.description = data
+            gallery.save()
+
+
+def get_descriptions():
+    for directory in os.listdir(app.config["UPLOAD_DIR"]):
+        if directory != '.DS_Store':
+            gallery = Gallery.objects(name=directory).first()
+            gallery_dir = os.path.join(app.config["UPLOAD_DIR"], directory)
+            if os.path.isfile(os.path.join(gallery_dir, "desc.txt")):
+                print "Desc.txt exists. Importing."
+                with open(os.path.join(gallery_dir, "desc.txt"), "r") as desc_file:
+                    data = desc_file.read().replace('\n', '')
+                    print "Desc.txt content: %s" % data
+                    gallery.desc = data
+            gallery.save()

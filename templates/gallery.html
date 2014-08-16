@@ -10,6 +10,9 @@
   <div class="row">
     <div class="small-12 columns text-center">
       <h2>{{ gallery.name }}</h2>
+      {% if gallery.desc %}
+        <p>{{ gallery.desc }}</p>
+      {% endif %}
     </div>
   </div>
 {% endblock %}
@@ -18,7 +21,7 @@
   <div class="row">
     <div id="gallery">
       {% for photo in gallery.photos %}
-        <a id="{{ photo.id }}"href="{{ url_for('photo_page_view', photo_id=photo.id) }}">
+        <a id="{{ photo.id }}"href="{{ url_for('photo_page_view', gallery_id=gallery.id, photo_id=photo.id) }}">
            <img src="{{ url_for('crop_view', filename=photo.crops["display"]) }}">
         </a>
       {% endfor %}

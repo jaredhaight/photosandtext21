@@ -16,8 +16,8 @@
 {% block content %}
   <div class="row">
     {% for gallery in galleries %}
-    <div class="small-12 medium-6 large-4 columns text-center">
-      <a href="{{ url_for('gallery_view', gallery_id=gallery.id) }}"><img src="{{ url_for('crop_view', filename=gallery.photos[0].crops["home600"] ) }}"></a>
+    <div class="small-12 medium-4 large-3 columns text-center">
+      <a href="{{ url_for('gallery_view', gallery_id=gallery.id) }}"><img src="{{ url_for('crop_view', filename=gallery.photos[0].crops["thumb400"] ) }}"></a>
       <p>{{ gallery.name }}</p>
     </div>
     {% endfor %}

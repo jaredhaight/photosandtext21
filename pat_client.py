@@ -1,6 +1,7 @@
 import os
 import glob
 import hashlib
+from datetime import datetime
 from shutil import copy
 from run_server import app
 from models.photos import Gallery, Photo, CropSettings
@@ -16,14 +17,14 @@ freezer = Freezer(app)
 @freezer.register_generator
 def home_view():
     for gallery in Gallery.objects:
-        yield {'gallery_id': gallery.id}
+        yield {'gallery_key': gallery.key}
 
 
 @freezer.register_generator
 def photo_page_view():
     for gallery in Gallery.objects:
         for photo in gallery.photos:
-            yield {'gallery_id':gallery.id, 'photo_id': photo.id}
+            yield {'gallery_key':gallery.key, 'photo_key': photo.key}
 
 
 def create_deploy_list():
@@ -81,11 +82,15 @@ def deploy_site():
 
 
 def import_files():
+    file_types = ('*.jpg', '*.JPG')
     for directory in os.listdir(app.config["UPLOAD_DIR"]):
+        photos = []
         if directory != '.DS_Store':
             gallery = Gallery(name=directory)
             gallery_dir = os.path.join(app.config["UPLOAD_DIR"], directory)
-            photos = glob.glob(str(gallery_dir+"/*.jpg"))
+            for file_type in file_types:
+                photos.extend(glob.glob(str(gallery_dir+"/"+file_type)))
+            gallery.key = hashlib.sha512(str(photos[0])).hexdigest()[:7]
             photo_i = 1
             for photo in photos:
                 copy(photo, app.config["PHOTO_STORE"])
@@ -95,6 +100,11 @@ def import_files():
                 photo_exif = get_image_info(photo)
                 if photo_exif is not None:
                     photo_doc.exif = photo_exif
+                if photo_doc.exif["DateTime"]:
+                    year, month, dayhour, minute, second = str(photo_doc.exif["DateTime"]).split(':')
+                    day, hour = dayhour.split(' ')
+                    photo_doc.date_taken = datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
+                photo_doc.key = hashlib.sha512(open(photo).read()).hexdigest()[:7]
                 crop_i = 1
                 for cropsetting in CropSettings.objects:
                     cropfile = make_crop(filename, cropsetting.name, cropsetting.height, cropsetting.width)
@@ -112,7 +122,7 @@ def import_files():
                 with open(os.path.join(gallery_dir, "desc.txt"), "r") as desc_file:
                     data = desc_file.read().replace('\n', '')
                     print "Desc.txt content: %s" % data
-                    gallery.description = data
+                    gallery.desc = data
             gallery.save()
 
 

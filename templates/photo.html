@@ -9,12 +9,14 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row">
+  <div class="row photo-page">
     <div class="small-12 large-10 columns photo">
     {% if photo.orientation == 'landscape' %}
-      <img class="landscape" src="{{ url_for('crop_view', filename=photo.crops["display1280"]) }}">
+      <img data-interchange="[{{ url_for('crop_view', filename=photo.crops["display_c"]) }}, (default)], [{{ url_for('crop_view', filename=photo.crops["display_b"]) }}, (medium)], [{{ url_for('crop_view', filename=photo.crops["display1600"]) }}, (large)]" class="landscape">
+      <noscript><img src="{{ url_for('crop_view', filename=photo.crops["display1280"]) }}"></noscript>
     {% else %}
-      <img class="portrait" src="{{ url_for('crop_view', filename=photo.crops["home600"]) }}">
+      <img data-interchange="[{{ url_for('crop_view', filename=photo.crops["home400"]) }}, (default)], [{{ url_for('crop_view', filename=photo.crops["home400"]) }}, (medium)], [{{ url_for('crop_view', filename=photo.crops["home600"]) }}, (large)]" class="portrait">
+      <noscript><img src="{{ url_for('crop_view', filename=photo.crops["home600"]) }}"></noscript>
     {% endif %}
     </div>
     <div class="small-12 large-2 columns photo-sidebar">
@@ -36,9 +38,12 @@
       </div>
       <div class="row photo-nav">
         <div class="small-12 columns">
+            <p>In gallery: <a href="{{ url_for('gallery_view', gallery_key=gallery.key) }}">{{ gallery.name }}</a></p>
+        </div>
+        <div class="small-12 columns">
           {% if paged.has_prev %}
             {% set photo_prev=paged.prev().items[0] %}
-            <a class="photo-prev-nav-link left" href="{{ url_for('photo_page_view', gallery_id=gallery.id, photo_id=photo_prev.id) }}">
+            <a class="nav-left photo-prev-nav-link left" href="{{ url_for('photo_page_view', gallery_key=gallery.key, photo_key=photo_prev.key) }}">
               <p class="photo-nav-text">Previous</p>
               <div class="photo-nav-cover abs-left"></div>
               <img src="{{ url_for('crop_view', filename=photo_prev.crops["thumb200"])  }}">
@@ -46,7 +51,7 @@
           {% endif %}
           {% if paged.has_next %}
             {% set photo_next=paged.next().items[0] %}
-            <a class="photo-next-nav-link right" href="{{ url_for('photo_page_view', gallery_id=gallery.id, photo_id=photo_next.id) }}">
+            <a class="nav-right photo-next-nav-link right" href="{{ url_for('photo_page_view', gallery_key=gallery.key, photo_key=photo_next.key) }}">
               <p class="photo-nav-text">Next</p>
               <div class="photo-nav-cover abs-right"></div>
               <img src="{{ url_for('crop_view', filename=photo_next.crops["thumb200"])  }}">

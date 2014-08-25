@@ -13,29 +13,39 @@ if app.config['DEBUG']:
         return send_from_directory((os.path.join(os.getcwd(), 'media/crops')), filename)
 
 @app.route('/')
-def home_view():
-    galleries = Gallery.objects
+@app.route('/page/<int:page_num>/')
+def home_view(page_num=1):
+    galleries = Gallery.objects.paginate(per_page=12, page=page_num)
     return render_template('home.html', galleries=galleries)
 
-@app.route('/gallery/<string:gallery_id>/')
-def gallery_view(gallery_id):
-    gallery = Gallery.objects.get_or_404(id=gallery_id)
+@app.route('/gallery/<string:gallery_key>/')
+def gallery_view(gallery_key):
+    gallery = Gallery.objects.get_or_404(key=gallery_key)
     return render_template('gallery.html', gallery=gallery)
 
-@app.route('/gallery/<string:gallery_id>/photo/<string:photo_id>/')
-def photo_page_view(gallery_id, photo_id):
-    photo = Photo.objects.get_or_404(id=photo_id)
-    gallery = Gallery.objects.get_or_404(id=gallery_id)
+@app.route('/gallery/<gallery_key>/photo/<photo_key>/')
+def photo_page_view(gallery_key, photo_key):
+    photo = Photo.objects.get_or_404(key=photo_key)
+    gallery = Gallery.objects.get_or_404(key=gallery_key)
     pos = gallery.photos.index(photo)
-    paged = Gallery.objects.paginate_field('photos', gallery.id, pos+1, per_page=1, )
-    aperture1, aperture2 = photo.exif["FNumber"]
-    photo_aperture = aperture1/float(aperture2)
-    exif_a, exif_b = photo.exif['ExposureTime']
-    if exif_b == 1:
-        photo_shutter = '%s seconds' % exif_a
-    else:
-        photo_shutter = '%s/%s' % (exif_a, exif_b)
-    focal_a, focal_b = photo.exif["FocalLength"]
-    photo_focal = focal_a/focal_b
+    paged = Gallery.objects.paginate_field('photos', gallery.id, pos+1, per_page=1)
+    try:
+        aperture1, aperture2 = photo.exif["FNumber"]
+        photo_aperture = aperture1/float(aperture2)
+    except:
+        photo_aperture = None
+    try:
+        exif_a, exif_b = photo.exif['ExposureTime']
+        if exif_b == 1:
+            photo_shutter = '%s seconds' % exif_a
+        else:
+            photo_shutter = '%s/%s' % (exif_a, exif_b)
+    except:
+        photo_shutter = None
+    try:
+        focal_a, focal_b = photo.exif["FocalLength"]
+        photo_focal = focal_a/focal_b
+    except:
+        photo_focal = None
     return render_template('photo.html', photo=photo, photo_aperture=photo_aperture, photo_shutter=photo_shutter,
                            photo_focal=photo_focal, paged=paged, gallery=gallery)

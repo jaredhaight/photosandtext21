@@ -19,6 +19,7 @@ def init_env():
     crop_list.append(CropSettings(name="home800", height=0, width=800))
     crop_list.append(CropSettings(name="display1280", height=0, width=1280))
     crop_list.append(CropSettings(name="display1600", height=0, width=1600))
+    crop_list.append(CropSettings(name="display2048", height=0, width=2048))
     crop_list.append(CropSettings(name="display_t", height=0, width=100))
     crop_list.append(CropSettings(name="display_m", height=0, width=240))
     crop_list.append(CropSettings(name="display_n", height=0, width=320))

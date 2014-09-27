@@ -1,10 +1,9 @@
 import os
 
+
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    MONGODB_HOST = 'localhost'
-    MONGODB_PORT = '27017'
-    MONGODB_DB = 'pat21'
+    SQLALCHEMY_DATABASE_URI = "postgresql://localhost/pat2"
     BUILD_DIR = os.path.join(os.getcwd(),'build')
     UPLOAD_DIR = os.path.join(os.getcwd(), 'upload')
     PHOTO_STORE = os.path.join(os.getcwd(),'media/photos')
@@ -14,6 +13,7 @@ class Config(object):
     AWS_SECRET_KEY = os.environ.get('AWS_SECRET_KEY')
     SITE_BUCKET = "www.photosandtext.com"
     DEBUG = False
+
 
 class DevConfig(Config):
     SITE_BUCKET = "beta.photosandtext.com"

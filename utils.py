@@ -3,14 +3,16 @@ import os
 from PIL import Image, ImageOps
 from PIL.ExifTags import TAGS
 
-from photosandtext21 import app
-from models.photos import CropSettings
+from photosandtext21 import app, db
+from models.photos import *
+from models.deploy import *
 
 PHOTO_STORE = app.config["PHOTO_STORE"]
 CROP_STORE = app.config["CROP_STORE"]
 
 
 def init_env():
+    db.create_all()
     crop_list = list()
     crop_list.append(CropSettings(name="thumb200", height=200, width=200))
     crop_list.append(CropSettings(name="thumb400", height=400, width=400))
@@ -27,8 +29,14 @@ def init_env():
     crop_list.append(CropSettings(name="display_z", height=0, width=640))
     crop_list.append(CropSettings(name="display_c", height=0, width=800))
     crop_list.append(CropSettings(name="display_b", height=0, width=1024))
-    for crop_setting in crop_list:
-        crop_setting.save()
+    for crop in crop_list:
+        db.session.add(crop)
+    db.session.commit()
+
+
+def recreate_env():
+    db.drop_all()
+    init_env()
 
 
 def get_orientation(image_filepath):

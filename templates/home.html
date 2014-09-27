@@ -24,8 +24,8 @@
       ">
           <a href="{{ url_for('gallery_view', gallery_key=gallery.key) }}">
             <div class="gallery-bg"></div>
-            <img src="{{ url_for('crop_view', filename=gallery.photos[0].crops["thumb400"] ) }}">
-            <p class="gallery-title">{{ gallery.name }}</p>
+            <img src="{{ url_for('crop_view', filename=gallery.photos[0].get_crop("thumb400") ) }}">
+            <div class="gallery-title"><h3>{{ gallery.name }}</h3></div>
           </a>
       </div>
     </div>
@@ -58,7 +58,7 @@ $(document).ready(function() {
           },
           function(){
             var name = $(this).attr("data-name");
-            $(this).children(".gallery-title").html("<h3>"+name+"</h3>");
+            $(this).find(".gallery-title").html("<h3>"+name+"</h3>");
             $(this).find(".gallery-bg").removeClass("gallery-bg-hover");
           })
         }

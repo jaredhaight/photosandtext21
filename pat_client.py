@@ -101,10 +101,12 @@ def import_files():
                 photo_exif = get_image_info(photo)
                 if photo_exif is not None:
                     photo_doc.exif = str(photo_exif)
-                if photo_exif["DateTimeOriginal"]:
-                    year, month, dayhour, minute, second = str(photo_exif["DateTimeOriginal"]).split(':')
-                    day, hour = dayhour.split(' ')
-                    photo_doc.date_taken = datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
+                    try:
+                        year, month, dayhour, minute, second = str(photo_exif["DateTimeOriginal"]).split(':')
+                        day, hour = dayhour.split(' ')
+                        photo_doc.date_taken = datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
+                    except:
+                        photo_doc.date_taken = datetime.now()
                 photo_doc.key = hashlib.sha512(open(photo).read()).hexdigest()[:7]
                 crop_i = 1
                 crops = dict()

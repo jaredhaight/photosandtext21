@@ -20,11 +20,19 @@
       {% block content %}
       {% endblock %}
     </article>
+
+    {% block footer %}
     <section id="footer">
-      {% block footer %}
-      {% endblock %}
+        <div class="row">
+            <div class="small-12 columns text-center">
+                <p><a href="/">Home</a></p>
+                <p><a href="/about">About</a></p>
+
+            </div>
+        </div>
     </section>
-  <script src="{{ url_for('static', filename="js/jquery-2.1.0.min.js") }}"></script>
+    {% endblock %}
+    <script src="{{ url_for('static', filename="js/jquery-2.1.0.min.js") }}"></script>
   <script src="{{ url_for('static', filename="js/foundation.min.js") }}"></script>
   <script>
     $(document).foundation();

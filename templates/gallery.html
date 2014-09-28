@@ -7,19 +7,21 @@
 {% block title %}{{ gallery.name }}{% endblock %}
 
 {% block header %}
-  <div class="row">
-    <div class="gallery-header">
-        <div class="small-2 columns left nav-home">
-            <a href="/"><i class="icon-home"></i></a>
-        </div>
-        <div class="small-8 columns text-center">
-          <h2>{{ gallery.name }}</h2>
-        </div>
-        <div class="small-2 columns">
+  <section id="footer">
+      <div class="row">
+        <div class="gallery-header">
+            <div class="medium-2 columns left nav-home hide-for-small">
+                <a href="/"><i class="icon-home"></i></a>
+            </div>
+            <div class="small-12 medium-8 columns text-center">
+              <h2>{{ gallery.name }}</h2>
+            </div>
+            <div class="medium-2 columns hide-for-small">
 
+            </div>
         </div>
-    </div>
-  </div>
+      </div>
+  </section>
 {% endblock %}
 
 {% block content %}

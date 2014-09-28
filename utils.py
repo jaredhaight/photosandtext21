@@ -61,7 +61,7 @@ def make_crop(image, cropName, height, width):
         height = t_img.size[1]
     if width == 0:
         width = t_img.size[0] * height / t_img.size[1]
-        t_img.thumbnail((width,height), Image.ANTIALIAS)
+        t_img.thumbnail((width, height), Image.ANTIALIAS)
         t_img.save(CROP_STORE+'/'+filename, 'JPEG', quality=90)
         return filename
     if height == 0:
@@ -69,8 +69,8 @@ def make_crop(image, cropName, height, width):
         t_img.thumbnail((width,height), Image.ANTIALIAS)
         t_img.save(CROP_STORE+'/'+filename, 'JPEG', quality=90)
         return filename
-    t_fit = ImageOps.fit(t_img, (height,width), Image.ANTIALIAS, 0, (0.5,0.5))
-    t_fit.save(CROP_STORE+'/'+filename,"JPEG", quality=90)
+    t_fit = ImageOps.fit(t_img, (height, width), Image.ANTIALIAS, 0, (0.5, 0.5))
+    t_fit.save(CROP_STORE+'/'+filename, "JPEG", quality=90)
     #upload_to_cdn(filename,'crop')
     return filename
 

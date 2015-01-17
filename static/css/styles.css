@@ -135,6 +135,7 @@ h4 {
 .photo {
     background: #000;
     text-align: center;
+    overflow: hidden;
 }
 
 .photo-sidebar {
@@ -206,8 +207,13 @@ h4 {
 
 .photo-nav-footer {
     margin-top: 10px;
+    position: absolute;
+    bottom: 10px;
 }
 
+.photo-nav-footer a {
+    padding: 10px;
+}
 /* Medium Only Screens */
 @media only screen and (min-width: 40.063em) and (max-width: 64em) {
 
@@ -215,7 +221,18 @@ h4 {
 
 /* Medium and larger */
 @media only screen and (min-width: 40.063em) {
+    /* Home Pages */
+    .home-wrap {
+        max-width: 860px;
+        margin: 0 auto;
+    }
+
     /* Gallery Page */
+    .gallery-wrap {
+        max-width: 1680px;
+        margin: 0 auto;
+    }
+
     .nav-home {
         display: inline-block;
         font-size: 2em;
@@ -244,6 +261,11 @@ h4 {
 
 /* Large Screens */
 @media only screen and (min-width: 64.063em) {
+
+    /* Home Page */
+    .home-wrap {
+        max-width: 1280px;
+    }
 
     /* Gallery Page */
     .gallery-header {
@@ -274,9 +296,11 @@ h4 {
     }
 
     .photo-nav {
-        height: 500px;
+        height: 518px;
         text-align: center;
         padding-bottom: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     .photo-nav-cover {
@@ -298,6 +322,10 @@ h4 {
         top: auto;
         right: auto;
         width: 100%;
+    }
+    .text-content p {
+        font-size: 1.1em;
+        line-height: 1.5em;
     }
 }
 

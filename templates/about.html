@@ -1,0 +1,29 @@
+{% extends "word_template.html" %}
+
+{% block text_content %}
+<h2>About</h2>
+<p>My name is Jared, I live in North Carolina and I take pictures.</p>
+<p>
+    This site is a little side project of mine that I use to play with web design and technologies. In it's current iteration, I dump photos in a folders organized by gallery, where
+    they are then processed and feed into a database. This processing includes generating all of the crops, reading the exif data and pulling and comments/descriptions of the photos.
+    From there I'm using a local instance of <a href="http://flask.pocoo.org/">Flask</a> to generate a static copy of the site and then deploying the site to Amazon's S3 service.
+    This process offers a number of benefits: I don't have to edit my photography work flow much, all information that's relevant to the site is stored directly in the photos and
+    because all of the site is hosted on a CDN, it's quick and even cheaper than hosting a VPS of my own.
+</p>
+<p>
+    All of the code for the site is hosted <a href="https://github.com/jaredhaight/photosandtext21">here, on Github</a>. There's also a number of other projects I've worked on there.
+    I'm entirely self taught when it comes to programming, so my code is probably terribly messy and inefficient. It seems to get the job done though, so that's nice.
+</p>
+<p>
+    I can be contacted at jared [at] photosandtext [dot] com. If you want to be like a super secret spy, my public key can be found <a href="https://keybase.io/jaredhaight">here</a>.
+</p>
+
+{% endblock %}
+
+{% block footer %}
+  <div class="row">
+    <div class="small-12 columns text-center">
+        <p><a href="/">Home</a></p>
+    </div>
+  </div>
+{% endblock %}

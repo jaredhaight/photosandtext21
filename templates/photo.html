@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block head %}
+    <meta property="og:title" content="Photos and Text" />
+    {% if photo.get_exif("ImageDescription") %}
+    <meta property="og:description" content="{{ photo.get_exif("ImageDescription") }}" />
+    {% endif %}
+    <meta property="og:image" content="{{site_url + url_for('crop_view', filename=photo.get_crop("thumb400"))}}" />
 {% endblock %}
 
 {% block title %}Photo{% endblock %}
@@ -59,8 +64,9 @@
             </a>
           {% endif %}
         </div>
-        <div class="photo-nav-footer">
+        <div class="small-12 columns photo-nav-footer">
           <a href="/">Home</a>
+          <a href="{{ url_for("about_view") }}">About</a>
          </div>
       </div>
     </div>

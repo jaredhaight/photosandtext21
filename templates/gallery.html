@@ -2,6 +2,11 @@
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/justifiedGallery-31.min.css') }}">
+  <meta property="og:title" content="{{ gallery.name }}" />
+  {% if gallery.desc %}
+  <meta property="og:description" content="{{ gallery.desc }}" />
+  {% endif %}
+  <meta property="og:image" content="{{ site_url + url_for('crop_view', filename=gallery.photos[0].get_crop("thumb400")) }}" />
 {% endblock %}
 
 {% block title %}{{ gallery.name }}{% endblock %}
@@ -25,22 +30,24 @@
 {% endblock %}
 
 {% block content %}
-  {% if gallery.desc %}
-  <div class="row">
-    <div class="small-12 medium-10 large-6 text-center medium-centered columns">
-      <div class="gallery-desc">
-        <p>{{ gallery.desc }}</p>
+  <div class="gallery-wrap">
+    {% if gallery.desc %}
+    <div class="row">
+      <div class="small-12 medium-10 large-6 text-center medium-centered columns">
+        <div class="gallery-desc">
+          <p>{{ gallery.desc }}</p>
+        </div>
       </div>
     </div>
-  </div>
-  {% endif %}
-  <div class="row">
-    <div id="gallery">
-      {% for photo in photos %}
-        <a id="{{ photo.id }}"href="{{ url_for('photo_page_view', gallery_key=gallery.key, photo_key=photo.key) }}">
-           <img src="{{ url_for('crop_view', filename=photo.get_crop("display")) }}">
-        </a>
-      {% endfor %}
+    {% endif %}
+    <div class="row">
+      <div id="gallery">
+        {% for photo in photos %}
+          <a id="{{ photo.id }}"href="{{ url_for('photo_page_view', gallery_key=gallery.key, photo_key=photo.key) }}">
+             <img src="{{ url_for('crop_view', filename=photo.get_crop("display")) }}">
+          </a>
+        {% endfor %}
+      </div>
     </div>
   </div>
 {% endblock %}

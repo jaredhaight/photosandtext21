@@ -8,47 +8,49 @@
 {% block header %}
 <div class="row">
   <div class="small-12 text-center">
-    <h2>Photos and Text 2.1</h2>
+    <h2>Photos and Text</h2>
   </div>
 </div>
 {% endblock %}
 
 {% block content %}
-  <div class="row">
-    {% for gallery in galleries.items %}
-    <div class="small-12 medium-4 large-3 columns text-center">
-      <div class="gallery-link" data-name="{{ gallery.name }}"
-        {% if gallery.desc %}
-          data-description="{{ gallery.desc }}
-        {% endif %}
-      ">
-          <a href="{{ url_for('gallery_view', gallery_key=gallery.key) }}">
-            <div class="gallery-bg"></div>
-            <img src="{{ url_for('crop_view', filename=gallery.photos[0].get_crop("thumb400") ) }}">
-            <div class="gallery-title"><h3>{{ gallery.name }}</h3></div>
-          </a>
+  <div class="home-wrap">
+    <div class="row">
+      {% for gallery in galleries.items %}
+      <div class="small-12 medium-6 large-4 columns text-center">
+        <div class="gallery-link" data-name="{{ gallery.name }}"
+          {% if gallery.desc %}
+            data-description="{{ gallery.desc }}
+          {% endif %}
+        ">
+            <a href="{{ url_for('gallery_view', gallery_key=gallery.key) }}">
+              <div class="gallery-bg"></div>
+              <img src="{{ url_for('crop_view', filename=gallery.photos[0].get_crop("thumb400") ) }}">
+              <div class="gallery-title"><h3>{{ gallery.name }}</h3></div>
+            </a>
+        </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
-  <div class="row">
-    <div class="pagination small-12 columns">
-        {% if galleries.has_prev %}
-        <a class="nav-left left" href="{{ url_for('home_view',page_num=(galleries.page - 1))}}"><icon class="icon-arrow-left"></icon></a>
-        {% endif %}
-        {% if galleries.has_next %}
-        <a class="nav-right right" href="{{ url_for('home_view',page_num=(galleries.page + 1)) }}"><icon class="icon-arrow-right"></icon></a>
-        {% endif %}
+    <div class="row">
+      <div class="pagination small-12 columns">
+          {% if galleries.has_prev %}
+          <a class="nav-left left" href="{{ url_for('home_view',page_num=(galleries.page - 1))}}"><icon class="icon-arrow-left"></icon></a>
+          {% endif %}
+          {% if galleries.has_next %}
+          <a class="nav-right right" href="{{ url_for('home_view',page_num=(galleries.page + 1)) }}"><icon class="icon-arrow-right"></icon></a>
+          {% endif %}
+      </div>
     </div>
   </div>
 {% endblock %}
 {% block footer %}
-      <div class="row">
-        <div class="small-12 columns text-center">
-            <p><a href="/about">About</a></p>
-        </div>
-      </div>
-  {% endblock %}
+  <div class="row">
+    <div class="small-12 columns text-center">
+        <p><a href="{{ url_for("about_view") }}">About</a></p>
+    </div>
+  </div>
+{% endblock %}
 
 {% block javascript %}
 <script>

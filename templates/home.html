@@ -45,11 +45,14 @@
   </div>
 {% endblock %}
 {% block footer %}
-  <div class="row">
-    <div class="small-12 columns text-center">
-        <p><a href="{{ url_for("about_view") }}">About</a></p>
+  <section id="footer">
+    <div class="row">
+      <div class="small-12 columns text-center">
+          <p><a href="{{ url_for("about_view") }}">About</a></p>
+          <p><a href="https://words.photosandtext.com">Words</a></p>
+      </div>
     </div>
-  </div>
+  </section>
 {% endblock %}
 
 {% block javascript %}
